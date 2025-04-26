@@ -53,6 +53,9 @@ public class Dog {
 
     public void ClearDiet (){
         diet.clear();
+        for (int i = 0;i<nutrients_consumption.length;i++) {
+            nutrients_consumption[i] = 0;
+        }
     }
 
     public void setNutrientConsumption(double [] consumption) {
