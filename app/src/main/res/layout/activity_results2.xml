@@ -7,4 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".Results">
 
+    <TextView
+        android:id="@+id/outputTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="284dp"
+        android:padding="16dp"
+        android:text=""
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

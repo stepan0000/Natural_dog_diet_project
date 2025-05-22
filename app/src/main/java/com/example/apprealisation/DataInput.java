@@ -131,7 +131,6 @@ public class DataInput extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selected_activitytype = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DataInput.this, "Выбрано: " + selected_activitytype, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -157,7 +156,6 @@ public class DataInput extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected_food = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DataInput.this, "Выбрано: " + selected_food, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -177,7 +175,6 @@ public class DataInput extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selected_breed = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DataInput.this, "Выбрано: " + selected_breed, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -199,7 +196,6 @@ public class DataInput extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selected_gendertype = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DataInput.this, "Выбрано: " + selected_gendertype, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -219,7 +215,6 @@ public class DataInput extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selected_dogstatus = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DataInput.this, "Выбрано: " + selected_dogstatus, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -326,16 +321,14 @@ public class DataInput extends AppCompatActivity {
 
 
 
-/*
-                // Проверка породы
                 if (selected_breed.equals(getResources().getStringArray(R.array.dogbreed)[0])) {
                     Toast.makeText(DataInput.this,
                             "Выберите породу собаки!",
                             Toast.LENGTH_SHORT).show();
                     isValid = false;
                 }
-*/
-                // Проверка пола
+
+
                 if (selected_gendertype.equals(getResources().getStringArray(R.array.doggender)[0])) {
                     Toast.makeText(DataInput.this,
                             "Выберите пол собаки!",
@@ -372,8 +365,9 @@ public class DataInput extends AppCompatActivity {
 
                     String ans = MainActivity.dog.GetNutrientsNorm() + "\n" + MainActivity.dog.GetNutrientsConsumption();
                     answerTextView.setText(ans);
-
-
+                    Intent intent = new Intent(DataInput.this, Results.class);
+                    intent.putExtra("answer_key", ans);
+                    startActivity(intent);
                 }
             }
         });
