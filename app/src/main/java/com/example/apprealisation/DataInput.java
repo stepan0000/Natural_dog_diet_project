@@ -27,8 +27,6 @@ public class DataInput extends AppCompatActivity {
 
     EditText etDogFoodG;
 
-    TextView answerTextView;
-
     TextView dietTextView;
     Button buttonSubmit;
 
@@ -91,8 +89,6 @@ public class DataInput extends AppCompatActivity {
         });
 
 
-
-        answerTextView  = findViewById(R.id.answerTextView);
 
         etDogFoodG = findViewById(R.id.etDogFoodG);
 
@@ -364,7 +360,6 @@ public class DataInput extends AppCompatActivity {
                     MainActivity.dogRepo.EstimateNutrientsConsumption(MainActivity.dog);
 
                     String ans = MainActivity.dog.GetNutrientsNorm() + "\n" + MainActivity.dog.GetNutrientsConsumption();
-                    answerTextView.setText(ans);
                     Intent intent = new Intent(DataInput.this, Results.class);
                     intent.putExtra("answer_key", ans);
                     startActivity(intent);
