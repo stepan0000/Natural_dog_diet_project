@@ -89,6 +89,17 @@ public class DataInput extends AppCompatActivity {
         });
 
 
+        Button back_button = findViewById(R.id.buttonBack);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DataInput.this, MainActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
+
 
         etDogFoodG = findViewById(R.id.etDogFoodG);
 
