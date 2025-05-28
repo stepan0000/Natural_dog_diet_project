@@ -13,7 +13,7 @@
         android:padding="16dp"
         tools:context=".DataInput">
 
-        <!-- Основные поля ввода -->
+        <!-- Основные поля ввода (остаются без изменений) -->
         <EditText
             android:id="@+id/etDogname"
             android:layout_width="0dp"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@id/etDogWeight"
             android:layout_marginTop="16dp" />
 
-        <!-- Спинеры характеристик -->
+        <!-- Спинеры характеристик (остаются без изменений) -->
         <Spinner
             android:id="@+id/fordogactivity"
             android:layout_width="0dp"
@@ -83,7 +83,7 @@
             app:layout_constraintTop_toBottomOf="@id/fordoggender"
             android:layout_marginTop="16dp" />
 
-        <!-- Секция рациона -->
+        <!-- Секция рациона (остается без изменений) -->
         <TextView
             android:id="@+id/dietTextView"
             android:layout_width="0dp"
@@ -118,32 +118,43 @@
             app:layout_constraintTop_toBottomOf="@id/fordogfood"
             android:layout_marginTop="16dp" />
 
-        <!-- Кнопки действий -->
-        <Button
+        <!-- Кнопки действий с Material Design -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonAddFood"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:text="Добавить еду в рацион"
+            android:textColor="@color/colorPrimary"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1dp"
+            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etDogFoodG"
             android:layout_marginTop="16dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonClearDiet"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:text="Сбросить параметры диеты"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonAddFood"
             android:layout_marginTop="16dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSubmit"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:text="Рассчитать диету"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonClearDiet"
