@@ -385,10 +385,17 @@ public class DataInput extends AppCompatActivity {
                 String food = spinner_for_dog_food.getSelectedItem().toString();
 
                 int food_key = MainActivity.dogRepo.dogfoodsbyvalue.getAsInteger(food);
-                double food_g = Double.parseDouble(etDogFoodG.getText().toString());
-                MainActivity.dog.AddDogFood(food_key,food_g);
-                /*MainActivity.dog.ClearDiet();*/
-                dietTextView.setText(MainActivity.dogRepo.DecodeDiet(MainActivity.dog));
+                if (etDogFoodG.getText().toString().equals("") == false ) {
+                    double food_g = Double.parseDouble(etDogFoodG.getText().toString());
+                    MainActivity.dog.AddDogFood(food_key, food_g);
+                    /*MainActivity.dog.ClearDiet();*/
+                    dietTextView.setText(MainActivity.dogRepo.DecodeDiet(MainActivity.dog));
+                }
+                else {
+                    Toast.makeText(DataInput.this,
+                            "Введите массу продукта!",
+                            Toast.LENGTH_SHORT).show();
+                }
         }
 
         });
