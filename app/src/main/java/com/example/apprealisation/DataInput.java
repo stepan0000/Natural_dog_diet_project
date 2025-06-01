@@ -42,7 +42,7 @@ public class DataInput extends AppCompatActivity {
 
     Spinner spinner_for_dog_food;
     String dogweight_string;
-    static float dogweight_float;
+    static double dogweight_double;
     static String selected_activitytype;
     static String selected_dogstatus;
     static String selected_breed;
@@ -52,8 +52,8 @@ public class DataInput extends AppCompatActivity {
         return dogname;
     }
 
-    public  static float getDogWeight() {
-        return dogweight_float;
+    public  static double getDogWeight() {
+        return dogweight_double;
     }
     public  static int getDogAge() {
         return dogage;
@@ -234,6 +234,10 @@ public class DataInput extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isValid = true;
 
+
+                Dog newDog = new Dog();
+
+
                 // Проверка имени
                 dogname = etDogname.getText().toString();
                 if (dogname.isEmpty()) {
@@ -248,6 +252,8 @@ public class DataInput extends AppCompatActivity {
                     isValid = false;
                 }
 
+
+
                 // Проверка веса
                 dogweight_string = etDogWeight.getText().toString();
                 if (dogweight_string.isEmpty()) {
@@ -255,15 +261,17 @@ public class DataInput extends AppCompatActivity {
                     isValid = false;
                 } else {
                     try {
-                        dogweight_float = Float.parseFloat(dogweight_string);
+                        dogweight_double = Double.parseDouble(dogweight_string);
                     } catch (NumberFormatException e) {
                         etDogWeight.setError("Введите корректный вес!");
                         isValid = false;
                     }
                 }
-                if (dogweight_float <= 0) {
+                if (dogweight_double <= 0) {
                     etDogWeight.setError("Введите корректный вес!");
                 }
+
+
                 // Проверка активности
                 if (selected_activitytype.equals(getResources().getStringArray(R.array.activelifetime)[0])) {
                     Toast.makeText(DataInput.this,
@@ -273,21 +281,21 @@ public class DataInput extends AppCompatActivity {
                 }
                 long selected;
 
-                MainActivity.dog.ClearTraits();
+                newDog.ClearTraits();
 
                 /*Инициализация особенностей по активности*/
                 selected =  spinner_for_dog_activity.getSelectedItemId();
 
                 if (selected == 1) {
-                    MainActivity.dog.AddTrait(8);
+                    newDog.AddTrait(8);
                 }
 
                 if (selected == 2) {
-                    MainActivity.dog.AddTrait(9);
+                    newDog.AddTrait(9);
                 }
 
                 if (selected == 3) {
-                    MainActivity.dog.AddTrait(10);
+                    newDog.AddTrait(10);
                 }
 
                 /*Инициализация особенностей по беременности*/
@@ -295,11 +303,11 @@ public class DataInput extends AppCompatActivity {
                 selected =  spinner_for_dog_status.getSelectedItemId();
 
                 if (selected == 1) {
-                    MainActivity.dog.AddTrait(1);
+                    newDog.AddTrait(1);
                 }
 
                 if (selected == 2) {
-                    MainActivity.dog.AddTrait(2);
+                    newDog.AddTrait(2);
                 }
 
                 /*Инициализация особенностей по беременности*/
@@ -307,23 +315,23 @@ public class DataInput extends AppCompatActivity {
                 selected =  spinner_for_dog_gender.getSelectedItemId();
 
                 if (selected == 1) {
-                    MainActivity.dog.AddTrait(6);
+                    newDog.AddTrait(6);
                 }
 
                 if (selected == 2) {
-                    MainActivity.dog.AddTrait(7);
+                    newDog.AddTrait(7);
                 }
 
                 if (dogage<=1) {
-                    MainActivity.dog.AddTrait(3);
+                    newDog.AddTrait(3);
                 }
 
                 if ((dogage>1)&(dogage<=5)) {
-                    MainActivity.dog.AddTrait(4);
+                    newDog.AddTrait(4);
                 }
 
                 if ((dogage>5)) {
-                    MainActivity.dog.AddTrait(5);
+                    newDog.AddTrait(5);
                 }
 
 
@@ -354,23 +362,31 @@ public class DataInput extends AppCompatActivity {
                 // Если все данные корректны
                 if (isValid) {
                     Toast.makeText(DataInput.this,
-                            "Данные сохранены: " + dogname + ", " + dogweight_float + "кг, " +
+                            "Данные сохранены: " + dogname + ", " + dogweight_double + "кг, " +
                                     selected_activitytype + ", " + selected_breed + ", " +
                                     selected_gendertype + ", " + selected_dogstatus,
                             Toast.LENGTH_LONG).show();
 
                     // Вызываем вывод данных через DataWorking
-                    MainActivity.dog.setName(dogname);
-                    MainActivity.dog.setKg(dogweight_float);
-                    MainActivity.dog.setAge(dogage);
+                    newDog.setName(dogname);
+                    newDog.setKg(dogweight_double);
+                    newDog.setAge(dogage);
+                    newDog.setBreed(spinner_for_dog_breed.getSelectedItemPosition());
+                    newDog.setBreedKind(spinner_for_dog_breed.getSelectedItemPosition()); // или другое значение для breedkind
 
-                    MainActivity.dogRepo.updateDog(MainActivity.dog);
+                    long dogId = MainActivity.dogRepo.addDog(newDog);
+                    newDog.setId(dogId);
 
-                    MainActivity.dogRepo.EstimateFood(MainActivity.dog);
-                    MainActivity.dogRepo.EstimateNutrientsNorm(MainActivity.dog);
-                    MainActivity.dogRepo.EstimateNutrientsConsumption(MainActivity.dog);
 
-                    String ans = MainActivity.dog.GetNutrientsNorm() + "\n" + MainActivity.dog.GetNutrientsConsumption();
+                    MainActivity.dogRepo.EstimateFood(newDog);
+                    MainActivity.dogRepo.EstimateNutrientsNorm(newDog);
+                    MainActivity.dogRepo.EstimateNutrientsConsumption(newDog);
+
+
+                    MainActivity.dog = newDog;
+
+
+                    String ans = newDog.GetNutrientsNorm() + "\n" + newDog.GetNutrientsConsumption();
                     Intent intent = new Intent(DataInput.this, Results.class);
                     intent.putExtra("answer_key", ans);
                     startActivity(intent);
