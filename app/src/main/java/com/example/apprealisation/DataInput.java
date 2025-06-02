@@ -131,14 +131,20 @@ public class DataInput extends AppCompatActivity {
         deleteDog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                  MainActivity.dogRepo.deleteDog(MainActivity.dog);
                   List<String> dogs = new ArrayList<>();
                   MainActivity.dogRepo.ExportDogs(dogs);
-                  ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner_for_dog.getAdapter();
-                  adapter.clear(); // Очищаем старые элементы
-                  adapter.addAll(dogs); // Добавляем новые
-                  adapter.notifyDataSetChanged(); // Уведомляем об изменениях
-            }
+                  if (dogs.size()>1) {
+                      MainActivity.dogRepo.deleteDog(MainActivity.dog);
+                      MainActivity.dogRepo.ExportDogs(dogs);
+                      ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner_for_dog.getAdapter();
+                      adapter.clear(); // Очищаем старые элементы
+                      adapter.addAll(dogs); // Добавляем новые
+                      adapter.notifyDataSetChanged(); // Уведомляем об изменениях
+                  }
+                  else
+                      Toast.makeText(DataInput.this,
+                              "В списке должен остаться хотя бы один питомец",
+                              Toast.LENGTH_SHORT).show();                }
         });
 
 
