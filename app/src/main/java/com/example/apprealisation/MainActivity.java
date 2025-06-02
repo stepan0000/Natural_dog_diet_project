@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         for (Dog d : allDogs) {
             Log.d("AllDogs", d.toString());
         }
-        Button button = findViewById(R.id.buttonGoToDataInput);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button_calculate = findViewById(R.id.buttonGoToDataInput);
+        button_calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, DataInput.class);
@@ -93,6 +93,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        Button button_add_pet = findViewById(R.id.buttonAddYourPet);
+        button_add_pet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddPet.class);
+
+                startActivity(intent);
+            }
+        });
 
 
     }
