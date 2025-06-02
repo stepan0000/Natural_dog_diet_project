@@ -97,15 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Button button_add_pet = findViewById(R.id.buttonAddYourPet);
-        button_add_pet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddPet.class);
 
-                startActivity(intent);
-            }
-        });
 
 
     }

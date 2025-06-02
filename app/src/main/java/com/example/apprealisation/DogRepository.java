@@ -148,7 +148,7 @@ public class DogRepository {
     }
 
     // Удаление данных собаки
-    public int deleteUser(Dog dog) {
+    public int deleteDog(Dog dog) {
         dbManager.open();
 
         int count = dbManager.db.delete(
