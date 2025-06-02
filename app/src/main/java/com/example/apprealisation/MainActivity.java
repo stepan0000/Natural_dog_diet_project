@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public static DogRepository dogRepo;
     public static Dog dog;
 
+    public static List<Dog> dogs;
 
 
     @Override
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         dog = dogRepo.getDog(1);
 
+        dogs = dogRepo.getAllDogs();
 
 
         double food = dogRepo.EstimateFood(dog);

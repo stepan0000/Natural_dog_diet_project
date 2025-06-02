@@ -37,9 +37,9 @@ public class DataInput extends AppCompatActivity {
     static int dogage;
 
         Spinner spinner_for_dog_activity;
-    Spinner spinner_for_dog_breed;
     Spinner spinner_for_dog_status;
 
+    Spinner spinner_for_dog;
     Spinner spinner_for_dog_food;
     String dogweight_string;
     static float dogweight_float;
@@ -63,8 +63,12 @@ public class DataInput extends AppCompatActivity {
         return selected_activitytype;
     }
 
-    public static String getDogBreed() {
+    public  String getDogBreed() {
         return selected_breed;
+    }
+
+    public  Integer getDogBreedID() {
+        return 0;
     }
 
     public static String getDogGender() {
@@ -116,11 +120,11 @@ public class DataInput extends AppCompatActivity {
         etDogage = findViewById(R.id.etDogAge);
         etDogage.setText(Integer.toString(MainActivity.dog.age));
 
-        spinner_for_dog_breed = findViewById(R.id.fordogbreed);
         spinner_for_dog_gender = findViewById(R.id.fordoggender);
         spinner_for_dog_status = findViewById(R.id.fordogstatus);
         spinner_for_dog_activity = findViewById(R.id.fordogactivity);
         spinner_for_dog_food = findViewById(R.id.fordogfood);
+        spinner_for_dog = findViewById(R.id.dogSpinner);
 
         buttonSubmit = findViewById(R.id.buttonSubmit);
         buttonAddFood = findViewById(R.id.buttonAddFood);
@@ -155,6 +159,13 @@ public class DataInput extends AppCompatActivity {
                 android.R.layout.simple_spinner_item,
                 foods);
 
+
+        ArrayAdapter<String> adapter_for_ = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                foods);
+
+
         adapter_for_dog_food.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_for_dog_food.setAdapter(adapter_for_dog_food);
@@ -170,25 +181,37 @@ public class DataInput extends AppCompatActivity {
             }
         });
 
+        List<String> dogs = new ArrayList<>();
 
-        ArrayAdapter<CharSequence> adapter_for_dog_breed = ArrayAdapter.createFromResource(
+        MainActivity.dogRepo.ExportDogs(dogs);
+
+        ArrayAdapter<String> adapter_for_dogs = new ArrayAdapter<>(
                 this,
-                R.array.dogbreed,
-                R.layout.spinner_dropdown_item
-        );
-        adapter_for_activity_type.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner_for_dog_breed.setAdapter(adapter_for_dog_breed);
-        spinner_for_dog_breed.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                android.R.layout.simple_spinner_item,
+                dogs);
+
+
+        adapter_for_dogs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_for_dog.setAdapter(adapter_for_dogs);
+
+
+        spinner_for_dog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selected_breed = parent.getItemAtPosition(position).toString();
+
+                Integer selected_dog = parent.getSelectedItemPosition();
+                MainActivity.dog = MainActivity.dogRepo.dogs.get(selected_dog);
+                Log.d("CurrentDog", MainActivity.dog.toString());
+                RefreshSelection();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // Действие при отсутствии выбора
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+
         ArrayAdapter<CharSequence> adapter_for_dog_gender = ArrayAdapter.createFromResource(
                 this,
                 R.array.doggender,
@@ -328,14 +351,6 @@ public class DataInput extends AppCompatActivity {
 
 
 
-                if (selected_breed.equals(getResources().getStringArray(R.array.dogbreed)[0])) {
-                    Toast.makeText(DataInput.this,
-                            "Выберите породу собаки!",
-                            Toast.LENGTH_SHORT).show();
-                    isValid = false;
-                }
-
-
                 if (selected_gendertype.equals(getResources().getStringArray(R.array.doggender)[0])) {
                     Toast.makeText(DataInput.this,
                             "Выберите пол собаки!",
@@ -355,7 +370,7 @@ public class DataInput extends AppCompatActivity {
                 if (isValid) {
                     Toast.makeText(DataInput.this,
                             "Данные сохранены: " + dogname + ", " + dogweight_float + "кг, " +
-                                    selected_activitytype + ", " + selected_breed + ", " +
+                                    selected_activitytype + ", " + ", " +
                                     selected_gendertype + ", " + selected_dogstatus,
                             Toast.LENGTH_LONG).show();
 
@@ -411,6 +426,8 @@ public class DataInput extends AppCompatActivity {
         });
 
         String val;
+        spinner_for_dog_status.setSelection(3);
+
         for (int trait:MainActivity.dog.traits) {
             val = MainActivity.dogRepo.traits.getAsString(Integer.toString(trait));
 
@@ -445,5 +462,105 @@ public class DataInput extends AppCompatActivity {
         }
         Log.d("Diet",MainActivity.dog.GetNutrientsNorm());
         Log.d("Diet",MainActivity.dog.GetNutrientsConsumption());
+    }
+
+    public void RefreshSelection() {
+
+        dietTextView.setText(MainActivity.dogRepo.DecodeDiet(MainActivity.dog));
+        etDogname.setText(MainActivity.dog.name);
+        etDogWeight.setText(Double.toString(MainActivity.dog.kg));
+        etDogage.setText(Integer.toString(MainActivity.dog.age));
+
+        String val;
+        spinner_for_dog_status.setSelection(3);
+
+        for (int trait:MainActivity.dog.traits) {
+            val = MainActivity.dogRepo.traits.getAsString(Integer.toString(trait));
+
+
+            if (trait == 1) {
+                spinner_for_dog_status.setSelection(1);
+            };
+
+            if (trait == 2) {
+                spinner_for_dog_status.setSelection(2);
+            };
+
+            if (trait == 6) {
+                spinner_for_dog_gender.setSelection(1);
+            };
+
+            if (trait == 7) {
+                spinner_for_dog_gender.setSelection(2);
+            };
+
+            if (trait == 8) {
+                spinner_for_dog_activity.setSelection(1);
+            };
+
+            if (trait == 9) {
+                spinner_for_dog_activity.setSelection(2);
+            };
+
+            if (trait == 10) {
+                spinner_for_dog_activity.setSelection(3);
+            };
+
+        }
+
+        MainActivity.dog.ClearTraits();
+        Long selected;
+        /*Инициализация особенностей по активности*/
+        selected =  spinner_for_dog_activity.getSelectedItemId();
+
+        if (selected == 1) {
+            MainActivity.dog.AddTrait(8);
+        }
+
+        if (selected == 2) {
+            MainActivity.dog.AddTrait(9);
+        }
+
+        if (selected == 3) {
+            MainActivity.dog.AddTrait(10);
+        }
+
+        /*Инициализация особенностей по беременности*/
+        selected =  spinner_for_dog_status.getSelectedItemId();
+
+
+        if (selected == 1) {
+            MainActivity.dog.AddTrait(1);
+        }
+
+        if (selected == 2) {
+            MainActivity.dog.AddTrait(2);
+        }
+
+
+        /*Инициализация особенностей по беременности*/
+
+        selected =  spinner_for_dog_gender.getSelectedItemId();
+
+        if (selected == 1) {
+            MainActivity.dog.AddTrait(6);
+        }
+
+        if (selected == 2) {
+            MainActivity.dog.AddTrait(7);
+        }
+
+        if (dogage<=1) {
+            MainActivity.dog.AddTrait(3);
+        }
+
+        if ((dogage>1)&(dogage<=5)) {
+            MainActivity.dog.AddTrait(4);
+        }
+
+        if ((dogage>5)) {
+            MainActivity.dog.AddTrait(5);
+        }
+
     }
 }

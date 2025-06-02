@@ -35,6 +35,8 @@ public final class DogContract {
 
     public static final String TABLE_BREED = "breed";
 
+    public static final String TABLE_GENDER= "breed";
+
     public static final String TABLE_DOG_DIET = "dog_diet";
 
     public static final String TABLE_DOGFOOD= "dogfood";

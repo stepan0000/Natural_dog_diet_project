@@ -19,7 +19,11 @@ public class DogRepository {
 
     public static ContentValues dogfoodsbyvalue;
 
+    public static ContentValues doggenders;
+
     private final DatabaseManager dbManager;
+
+    public static List<Dog> dogs;
 
     public DogRepository(Context context) {
         dbManager = new DatabaseManager(context);
@@ -31,6 +35,7 @@ public class DogRepository {
         LoadTraits();
         LoadBreeds();
         LoadFood();
+        dogs = getAllDogs();
     }
 
     // Добавление собаки
@@ -407,6 +412,8 @@ public class DogRepository {
     };
 
 
+
+
     public   void LoadFood (){
         dbManager.open();
 
@@ -434,6 +441,7 @@ public class DogRepository {
 
     };
 
+
     public void SetDogDiet(Dog dog) {
         dbManager.open();
 
@@ -457,6 +465,14 @@ public class DogRepository {
         for (String key : dogfoods.keySet()) {
             List.add(dogfoods.getAsString(key));
         }
+    }
+
+    public void ExportDogs(List<String> List) {
+        List.clear();
+        for (Dog aDog : dogs) {
+            List.add(aDog.name);
+        }
+
     }
 
     public String DecodeDiet(Dog dog) {

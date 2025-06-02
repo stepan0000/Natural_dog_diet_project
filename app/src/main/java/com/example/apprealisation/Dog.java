@@ -134,6 +134,19 @@ public class Dog {
 
     public void setKg(double kg) {
         this.kg = kg;
+
+        if (this.kg <=10) {
+            breedkind = 1;
+        }
+
+        if ((this.kg >10) & (this.kg <=20)) {
+            breedkind = 2;
+        }
+
+        if (this.kg >20) {
+            breedkind = 3;
+        }
+
     }
 
     public void setBreedKind(int breedkind) {
