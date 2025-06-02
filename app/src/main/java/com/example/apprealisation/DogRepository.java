@@ -468,6 +468,7 @@ public class DogRepository {
     }
 
     public void ExportDogs(List<String> List) {
+        dogs = getAllDogs();
         List.clear();
         for (Dog aDog : dogs) {
             List.add(aDog.name);

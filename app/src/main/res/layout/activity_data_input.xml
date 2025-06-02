@@ -13,7 +13,7 @@
         android:padding="16dp"
         tools:context=".DataInput">
 
-        <!-- Горизонтальная группа: Spinner и кнопка -->
+        <!-- Горизонтальная группа: Spinner и две кнопки -->
         <Spinner
             android:id="@+id/dogSpinner"
             android:layout_width="0dp"
@@ -28,15 +28,32 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonAddPet"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="48dp"
-            android:text="Добавить питомца"
+            android:text="Добавить"
+            android:textColor="@color/colorPrimary"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1dp"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toStartOf="@id/buttonDeletePet"
+            app:layout_constraintStart_toEndOf="@id/dogSpinner"
+            app:layout_constraintTop_toTopOf="@id/dogSpinner"
+            app:layout_constraintBottom_toBottomOf="@id/dogSpinner"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDeletePet"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="Удалить"
             android:textColor="@color/colorPrimary"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1dp"
             app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/dogSpinner"
+            app:layout_constraintStart_toEndOf="@id/buttonAddPet"
             app:layout_constraintTop_toTopOf="@id/dogSpinner"
             app:layout_constraintBottom_toBottomOf="@id/dogSpinner"
             android:layout_marginStart="8dp" />

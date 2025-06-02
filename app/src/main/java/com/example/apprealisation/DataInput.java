@@ -104,6 +104,39 @@ public class DataInput extends AppCompatActivity {
         });
 
 
+        Button addDog = findViewById(R.id.buttonAddPet);
+        addDog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.dog = new Dog();
+                MainActivity.dog.setName(etDogname.getText().toString());
+                RefreshSelection();
+                MainActivity.dogRepo.addDog(MainActivity.dog);
+
+                List<String> dogs = new ArrayList<>();
+
+                MainActivity.dogRepo.ExportDogs(dogs);
+
+                ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner_for_dog.getAdapter();
+                adapter.clear(); // Очищаем старые элементы
+                adapter.addAll(dogs); // Добавляем новые
+                adapter.notifyDataSetChanged(); // Уведомляем об изменениях
+
+
+            }
+        });
+
+
+        Button deleteDog = findViewById(R.id.buttonDeletePet);
+        deleteDog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+
 
         etDogFoodG = findViewById(R.id.etDogFoodG);
 
