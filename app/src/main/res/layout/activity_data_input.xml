@@ -13,7 +13,17 @@
         android:padding="16dp"
         tools:context=".DataInput">
 
-        <!-- Основные поля ввода (остаются без изменений) -->
+        <!-- Новый Spinner добавлен в самый верх -->
+        <Spinner
+            android:id="@+id/topSpinner"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Основные поля ввода (с измененным constraintTop для первого EditText) -->
         <EditText
             android:id="@+id/etDogname"
             android:layout_width="0dp"
@@ -22,7 +32,8 @@
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/topSpinner"
+            android:layout_marginTop="16dp" />
 
         <EditText
             android:id="@+id/etDogWeight"
@@ -161,8 +172,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp" />
 
-
-        <!-- Новая кнопка "Назад" -->
+        <!-- Кнопка "Назад" -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonBack"
             style="@style/Widget.Material3.Button"
@@ -180,7 +190,6 @@
             app:layout_constraintTop_toBottomOf="@id/buttonSubmit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
